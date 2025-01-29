@@ -9,7 +9,7 @@ async function getChapter() {
     errorMessage.style.display = 'none';
 
     try {
-        const response = await fetch(`http://localhost:5000/chapter/${currentChapter}`, {
+        const response = await fetch(`https://bhagavad-gita-viewer.onrender.com/chapter/${currentChapter}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
