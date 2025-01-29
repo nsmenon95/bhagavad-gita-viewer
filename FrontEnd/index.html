@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Bhagavad Gita</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='90'>🕉️</text></svg>">
+    <link rel="stylesheet" href="style.css">  
+  </head>
+<body>
+    <div class="container">
+        <h1>Bhagavad Gita</h1>
+        <div class="verse-container">
+            <h2 class="chapter-title" id="chapter-name"></h2>
+            <div class="chapter-details">
+                <span id="chapter-number"></span>
+                <span class="verse-count" id="verse-count"></span>
+            </div>
+            <p class="sanskrit-name" id="sanskrit-name"></p>
+            <p class="chapter-summary" id="chapter-summary"></p>
+        </div>
+        <div class="loader" id="loader"></div>
+        <button class="btn" onclick="getChapter()">Next Chapter</button>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
