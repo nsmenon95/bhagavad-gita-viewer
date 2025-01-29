@@ -1,84 +1,83 @@
-let currentChapter = 1;
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-async function getChapter() {
-    const loader = document.getElementById('loader');
-    const errorMessage = document.getElementById('error-message');
-    
-    // Show loader and hide any previous error
-    loader.style.display = 'block';
-    errorMessage.style.display = 'none';
+// Get the directory name in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+// Load environment variables with multiple fallback paths
+dotenv.config();
+dotenv.config({ path: '.env' });
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Updated CORS configuration
+const allowedOrigins = [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'https://localhost:5500',
+    'https://127.0.0.1:5500'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+app.get('/chapter/:id', async (req, res) => {
     try {
-        const response = await fetch(`http://localhost:5000/chapter/${currentChapter}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+        const chapterId = parseInt(req.params.id);
+        
+        // Validate chapter ID
+        if (isNaN(chapterId) || chapterId < 1 || chapterId > 18) {
+            return res.status(400).json({ 
+                error: 'Invalid chapter ID. Must be between 1 and 18.' 
+            });
+        }
+
+        const response = await fetch(
+            `https://bhagavad-gita3.p.rapidapi.com/v2/chapters/${chapterId}/`,
+            {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-host': 'bhagavad-gita3.p.rapidapi.com',
+                    'x-rapidapi-key': process.env.API_KEY,
+                    'Accept': 'application/json',
+                },
             }
-        });
+        );
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch chapter (Status: ${response.status})`);
+            throw new Error(`API Error: ${response.status}`);
         }
 
         const data = await response.json();
-        
-        if (!data || !data.name_translated) {
-            throw new Error('Invalid data received from server');
-        }
-
-        // Update DOM elements with chapter data
-        updateChapterContent(data);
-
-        // Increment chapter number (loop back to 1 if we reach 18)
-        currentChapter = currentChapter % 18 + 1;
+        res.json(data);
 
     } catch (error) {
-        console.error('Error:', error);
-        showError(error.message);
-    } finally {
-        loader.style.display = 'none';
+        console.error('Error fetching chapter:', error);
+        res.status(500).json({ error: 'Failed to fetch chapter data' });
     }
-}
+});
 
-function updateChapterContent(data) {
-    const elements = {
-        'chapter-name': data.name_translated,
-        'chapter-number': `Chapter ${data.chapter_number}`,
-        'verse-count': `${data.verses_count} Verses`,
-        'sanskrit-name': `${data.name_transliterated} (${data.name})`,
-        'chapter-summary': data.chapter_summary || 'No summary available'
-    };
-
-    for (const [id, content] of Object.entries(elements)) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = content;
-        }
-    }
-}
-
-function showError(message) {
-    const errorMessage = document.getElementById('error-message');
-    errorMessage.textContent = `Error: ${message}. Please try again.`;
-    errorMessage.style.display = 'block';
-    
-    // Clear chapter content
-    document.getElementById('chapter-name').textContent = 'Error Loading Chapter';
-    document.getElementById('chapter-number').textContent = '';
-    document.getElementById('verse-count').textContent = '';
-    document.getElementById('sanskrit-name').textContent = '';
-    document.getElementById('chapter-summary').textContent = 'Failed to load chapter content.';
-}
-
-// Load the first chapter when the page loads
-document.addEventListener('DOMContentLoaded', getChapter);
-
-// Add error handler for the loader
-const loader = document.getElementById('loader');
-if (loader) {
-    loader.onerror = function() {
-        this.style.display = 'none';
-        showError('Failed to load spinner image');
-    };
-}
+// Start the server
+app.listen(PORT, () => {
+    console.log(`✅ Backend running on port ${PORT}`);
+});
