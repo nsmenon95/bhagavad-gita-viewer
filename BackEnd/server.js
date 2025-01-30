@@ -9,28 +9,27 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables with multiple fallback paths
+// Load environment variables
 dotenv.config();
-dotenv.config({ path: '.env' });
-dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Updated CORS configuration
 const allowedOrigins = [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'https://localhost:5500',
-    'https://127.0.0.1:5500'
+    'http://localhost:5500', // Local development
+    'http://127.0.0.1:5500', // Local development
+    'https://nsmenon95.github.io', // Your GitHub Pages domain
+    'https://nsmenon95.github.io/bhagavad-gita-viewer', // Your specific project URL
+    'https://bhagavad-gita-viewer.onrender.com' // Your Render backend URL
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
-        
-        if (allowedOrigins.indexOf(origin) !== -1) {
+
+        if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -41,10 +40,11 @@ app.use(cors({
     credentials: true
 }));
 
+// API endpoint to fetch chapter data
 app.get('/chapter/:id', async (req, res) => {
     try {
         const chapterId = parseInt(req.params.id);
-        
+
         // Validate chapter ID
         if (isNaN(chapterId) || chapterId < 1 || chapterId > 18) {
             return res.status(400).json({ 
@@ -76,6 +76,9 @@ app.get('/chapter/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch chapter data' });
     }
 });
+
+// Serve static files (if needed)
+app.use(express.static(path.join(__dirname, '../client')));
 
 // Start the server
 app.listen(PORT, () => {

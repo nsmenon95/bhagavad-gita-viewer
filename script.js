@@ -3,12 +3,13 @@ let currentChapter = 1;
 async function getChapter() {
     const loader = document.getElementById('loader');
     const errorMessage = document.getElementById('error-message');
-    
+
     // Show loader and hide any previous error
     loader.style.display = 'block';
     errorMessage.style.display = 'none';
 
     try {
+        // Replace with your Render backend URL
         const response = await fetch(`https://bhagavad-gita-viewer.onrender.com/chapter/${currentChapter}`, {
             method: 'GET',
             headers: {
@@ -22,7 +23,7 @@ async function getChapter() {
         }
 
         const data = await response.json();
-        
+
         if (!data || !data.name_translated) {
             throw new Error('Invalid data received from server');
         }
@@ -62,7 +63,7 @@ function showError(message) {
     const errorMessage = document.getElementById('error-message');
     errorMessage.textContent = `Error: ${message}. Please try again.`;
     errorMessage.style.display = 'block';
-    
+
     // Clear chapter content
     document.getElementById('chapter-name').textContent = 'Error Loading Chapter';
     document.getElementById('chapter-number').textContent = '';
@@ -73,12 +74,3 @@ function showError(message) {
 
 // Load the first chapter when the page loads
 document.addEventListener('DOMContentLoaded', getChapter);
-
-// Add error handler for the loader
-const loader = document.getElementById('loader');
-if (loader) {
-    loader.onerror = function() {
-        this.style.display = 'none';
-        showError('Failed to load spinner image');
-    };
-}
