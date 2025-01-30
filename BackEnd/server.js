@@ -5,51 +5,45 @@ import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Get the directory name in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables with multiple fallback paths
 dotenv.config();
-dotenv.config({ path: '.env' });
-dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Updated CORS configuration
-const allowedOrigins = [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'https://localhost:5500',
-    'https://127.0.0.1:5500'
-];
-
+// Updated CORS configuration for GitHub Pages
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: '*', // Allow all origins temporarily for debugging
     methods: ['GET'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Enable pre-flight requests for all routes
+app.options('*', cors());
+
+// Add custom headers middleware
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 app.get('/chapter/:id', async (req, res) => {
     try {
         const chapterId = parseInt(req.params.id);
         
-        // Validate chapter ID
         if (isNaN(chapterId) || chapterId < 1 || chapterId > 18) {
             return res.status(400).json({ 
                 error: 'Invalid chapter ID. Must be between 1 and 18.' 
             });
+        }
+
+        const apiKey = process.env.API_KEY;
+        if (!apiKey) {
+            throw new Error('API key not configured');
         }
 
         const response = await fetch(
@@ -58,7 +52,7 @@ app.get('/chapter/:id', async (req, res) => {
                 method: 'GET',
                 headers: {
                     'x-rapidapi-host': 'bhagavad-gita3.p.rapidapi.com',
-                    'x-rapidapi-key': process.env.API_KEY,
+                    'x-rapidapi-key': apiKey,
                     'Accept': 'application/json',
                 },
             }
@@ -73,11 +67,18 @@ app.get('/chapter/:id', async (req, res) => {
 
     } catch (error) {
         console.error('Error fetching chapter:', error);
-        res.status(500).json({ error: 'Failed to fetch chapter data' });
+        res.status(500).json({ 
+            error: 'Failed to fetch chapter data',
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 
-// Start the server
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok' });
+});
+
 app.listen(PORT, () => {
     console.log(`✅ Backend running on port ${PORT}`);
 });
