@@ -1,0 +1,27 @@
+{
+  "name": "bhagavad-gita-viewer",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nsmenon95/bhagavad-gita-viewer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nsmenon95/bhagavad-gita-viewer/issues"
+  },
+  "homepage": "https://github.com/nsmenon95/bhagavad-gita-viewer#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2",
+    "serverless-http": "^4.0.0"
+  }
+}
