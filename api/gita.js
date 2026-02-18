@@ -111,4 +111,10 @@ app.get("/health", (req, res) => {
 /* =========================
    EXPORT HANDLER (IMPORTANT)
    ========================= */
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};
+
 export default serverless(app);
