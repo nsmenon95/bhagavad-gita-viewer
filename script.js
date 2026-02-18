@@ -51,7 +51,7 @@ const el = {
    ============================================================ */
 async function safeFetch(endpoint) {
     try {
-        const res = await fetch(`/api/gita${endpoint}`);
+        const res = await fetch(`/api/${endpoint}`);
         
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
