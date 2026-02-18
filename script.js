@@ -48,13 +48,10 @@ const el = {
    ============================================================ */
 async function safeFetch(endpoint) {
     try {
-
-        // remove accidental double slashes
-        const clean = endpoint.startsWith('/')
-            ? endpoint
-            : '/' + endpoint;
-
-        const res = await fetch(`/api${clean}`);
+        const res = await fetch(`/api${endpoint}`, {
+            method: 'GET',
+            cache: "no-store"
+        });
 
         if (!res.ok) {
             let msg = `Server error: ${res.status}`;
@@ -71,6 +68,7 @@ async function safeFetch(endpoint) {
         throw err;
     }
 }
+
 
 
 
