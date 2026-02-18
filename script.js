@@ -1,6 +1,3 @@
-const BACKEND_URL = ''; 
-
-
 /* ============================================================
    STATE MANAGEMENT
    ============================================================ */
@@ -51,18 +48,30 @@ const el = {
    ============================================================ */
 async function safeFetch(endpoint) {
     try {
-        const res = await fetch(`/api/${endpoint}`);
-        
+
+        // remove accidental double slashes
+        const clean = endpoint.startsWith('/')
+            ? endpoint
+            : '/' + endpoint;
+
+        const res = await fetch(`/api${clean}`);
+
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}));
-            throw new Error(errorData.error || `Server error: ${res.status}`);
+            let msg = `Server error: ${res.status}`;
+            try {
+                const j = await res.json();
+                if (j.error) msg = j.error;
+            } catch {}
+            throw new Error(msg);
         }
-        
+
         return await res.json();
+
     } catch (err) {
         throw err;
     }
 }
+
 
 
 /* ============================================================
