@@ -63,6 +63,8 @@ const el = {
     dailyVerseMeaning: document.getElementById('daily-verse-meaning'),
     // Add this inside the const el object, near the other daily tab elements
     dailyVerseFullMeaning: document.getElementById('daily-full-translation'),
+    verseTranslation: document.getElementById('verse-translation'),
+
 };
 
 
@@ -153,16 +155,26 @@ function renderChapterInfo(data) {
 
 function renderVerse(verse) {
     if (!verse) return;
+
     if (el.verseContainer) el.verseContainer.style.display = 'flex';
+
+    // Verse
     if (el.verseNumber) el.verseNumber.textContent = `Verse ${verse.chapter_number}.${verse.verse_number}`;
     if (el.verseText) el.verseText.textContent = verse.text;
     if (el.verseTranslit) el.verseTranslit.textContent = verse.transliteration;
-    if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings;
+
+    // Word meanings
+    if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings || "—";
+
+    // Full translation (NEW)
+    if (el.verseTranslation)
+        el.verseTranslation.textContent =
+            verse.translations?.[0]?.description || "Translation not available.";
+
+    // dropdown sync
     if (el.verseSelect) el.verseSelect.value = verse.verse_number;
-    // Inside renderVerse(verse)
-    if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings;
-    // Add a line here to show the full translation in the browse view too! 
 }
+
 
 function populateChapterDropdown(chapters) {
     if (!el.chapterSelect) return;

@@ -86,21 +86,25 @@
             </div>
             <!-- New code -->
 
-            <div class="daily-divider"></div>
-
-            <p class="daily-meaning-label">Translation</p>
-            <p id="daily-full-translation" class="daily-translation-text"></p>
-
-            <p class="daily-meaning-label">Word Meanings</p>
-            <p class="daily-meaning" id="daily-verse-meaning"></p>
-
             <!-- Verse Display -->
-            <div id="verse-container" class="verse-container" style="display:none;">
-                <p id="verse-number" class="verse-number"></p>
-                <p id="verse-text" class="verse-text"></p>
-                <p id="verse-translit" class="verse-translit"></p>
-                <p id="verse-meaning" class="verse-meaning"></p>
-            </div>
+<div id="verse-container" class="verse-container" style="display:none;">
+    <p id="verse-number" class="verse-number"></p>
+
+    <!-- 1. Sanskrit verse -->
+    <p id="verse-text" class="verse-text"></p>
+    <p id="verse-translit" class="verse-translit"></p>
+
+    <div class="daily-divider"></div>
+
+    <!-- 2. Word meaning -->
+    <p class="daily-meaning-label">Word Meanings</p>
+    <p id="verse-meaning" class="verse-meaning"></p>
+
+    <!-- 3. Full translation -->
+    <p class="daily-meaning-label">Translation</p>
+    <p id="verse-translation" class="daily-translation-text"></p>
+</div>
+
 
         </div><!-- /panel-browse -->
 
