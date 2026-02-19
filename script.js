@@ -172,20 +172,23 @@ async function loadChapter(chapterId) {
         populateVerseDropdown(state.totalVerses);
         
         // Show first verse immediately from the list
-        if(state.verses.length > 0) {
-            renderVerse(state.verses[0]);
-        }
+        const firstVerse = state.verses.find(v => v.verse_number === 1);
+        if(firstVerse) renderVerse(firstVerse);
 
     } catch (err) {
         showError(err.message);
     } finally {
         setLoading(false);
     }
+    el.prevVerseBtn.disabled = true;
+    el.nextVerseBtn.disabled = state.totalVerses <= 1;
+
 }
 
 async function loadVerse(verseId) {
     // 1. Try to find in local state first (Instant load)
-    const cachedVerse = state.verses.find(v => v.verse_number === verseId);
+    const cachedVerse = state.verses.find(v => Number(v.verse_number) === Number(verseId));
+
     
     if (cachedVerse) {
         state.currentVerse = verseId;
