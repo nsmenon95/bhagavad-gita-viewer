@@ -167,18 +167,19 @@ function renderVerse(verse) {
     if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings || "—";
 
     // Full translation (NEW)
-    // pick first english translation
     let englishMeaning = "Translation not available.";
 
     if (Array.isArray(verse.translations)) {
+        // Find the best English translation (often author 'Swami Sivananda' or similar is good)
         const eng = verse.translations.find(t =>
             t.language && t.language.toLowerCase() === "english"
         );
         if (eng && eng.description) englishMeaning = eng.description;
     }
 
-    if (el.verseTranslation)
+    if (el.verseTranslation) {
         el.verseTranslation.textContent = englishMeaning;
+    }
 
 
     // dropdown sync
@@ -348,20 +349,17 @@ async function loadDailyVerse(offset = 0) {
             `${chapterData.name_translated} · ${chapterData.name_transliterated}`;
         if (el.dailyVerseText) el.dailyVerseText.textContent = verseData.text;
         if (el.dailyVerseTranslit) el.dailyVerseTranslit.textContent = verseData.transliteration;
-        // NEW LINE BELOW:
+        // Render Full Meaning
         let englishMeaning = "Translation currently unavailable.";
-
         if (Array.isArray(verseData.translations)) {
             const eng = verseData.translations.find(t =>
                 t.language && t.language.toLowerCase() === "english"
             );
-            if (eng?.description) englishMeaning = eng.description;
+            if (eng && eng.description) englishMeaning = eng.description;
         }
 
-        if (el.dailyVerseFullMeaning)
-            el.dailyVerseFullMeaning.textContent = englishMeaning;
-
-        if (el.dailyVerseMeaning) el.dailyVerseMeaning.textContent = verseData.word_meanings;
+        if (el.dailyVerseFullMeaning) el.dailyVerseFullMeaning.textContent = englishMeaning;
+        if (el.dailyVerseMeaning) el.dailyVerseMeaning.textContent = verseData.word_meanings || "—";
         if (el.dailyCard) el.dailyCard.style.display = 'flex';
 
     } catch (err) {

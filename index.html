@@ -94,15 +94,17 @@
                 <p id="verse-text" class="verse-text"></p>
                 <p id="verse-translit" class="verse-translit"></p>
 
-                <div class="daily-divider"></div>
+                <div class="daily-divider" style="background: rgba(0,0,0,0.1);"></div>
 
                 <!-- 2. Word meaning -->
-                <p class="daily-meaning-label">Word Meanings</p>
+                <p class="meaning-label-dark">Word Meanings</p>
                 <p id="verse-meaning" class="verse-meaning"></p>
 
+                <div class="daily-divider" style="background: rgba(0,0,0,0.1); margin: 0.5rem 0;"></div>
+
                 <!-- 3. Full translation -->
-                <p class="daily-meaning-label">Translation</p>
-                <p id="verse-translation" class="daily-translation-text"></p>
+                <p class="meaning-label-dark">Full Translation</p>
+                <p id="verse-translation" class="verse-translation-dark"></p>
             </div>
 
 
@@ -134,13 +136,22 @@
                 </div>
 
                 <h2 class="daily-chapter-name" id="daily-chapter-name"></h2>
+
+                <!-- 1. Verse -->
                 <p class="daily-sanskrit" id="daily-verse-text"></p>
                 <p class="daily-translit" id="daily-verse-translit"></p>
 
                 <div class="daily-divider"></div>
 
+                <!-- 2. Word Meanings -->
                 <p class="daily-meaning-label">Word Meanings</p>
                 <p class="daily-meaning" id="daily-verse-meaning"></p>
+
+                <div class="daily-divider"></div>
+
+                <!-- 3. Full Translation -->
+                <p class="daily-meaning-label">Full Translation</p>
+                <p class="daily-translation-text" id="daily-full-translation"></p>
 
                 <button class="btn btn-share" id="share-btn" onclick="shareVerse()">
                     🔗 Share this verse
