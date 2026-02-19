@@ -167,9 +167,19 @@ function renderVerse(verse) {
     if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings || "—";
 
     // Full translation (NEW)
+    // pick first english translation
+    let englishMeaning = "Translation not available.";
+
+    if (Array.isArray(verse.translations)) {
+        const eng = verse.translations.find(t =>
+            t.language && t.language.toLowerCase() === "english"
+        );
+        if (eng && eng.description) englishMeaning = eng.description;
+    }
+
     if (el.verseTranslation)
-        el.verseTranslation.textContent =
-            verse.translations?.[0]?.description || "Translation not available.";
+        el.verseTranslation.textContent = englishMeaning;
+
 
     // dropdown sync
     if (el.verseSelect) el.verseSelect.value = verse.verse_number;
@@ -339,7 +349,18 @@ async function loadDailyVerse(offset = 0) {
         if (el.dailyVerseText) el.dailyVerseText.textContent = verseData.text;
         if (el.dailyVerseTranslit) el.dailyVerseTranslit.textContent = verseData.transliteration;
         // NEW LINE BELOW:
-        if (el.dailyVerseFullMeaning) el.dailyVerseFullMeaning.textContent = verseData.translations[0]?.description || "Translation currently unavailable.";
+        let englishMeaning = "Translation currently unavailable.";
+
+        if (Array.isArray(verseData.translations)) {
+            const eng = verseData.translations.find(t =>
+                t.language && t.language.toLowerCase() === "english"
+            );
+            if (eng?.description) englishMeaning = eng.description;
+        }
+
+        if (el.dailyVerseFullMeaning)
+            el.dailyVerseFullMeaning.textContent = englishMeaning;
+
         if (el.dailyVerseMeaning) el.dailyVerseMeaning.textContent = verseData.word_meanings;
         if (el.dailyCard) el.dailyCard.style.display = 'flex';
 
