@@ -61,6 +61,8 @@ const el = {
     dailyVerseText: document.getElementById('daily-verse-text'),
     dailyVerseTranslit: document.getElementById('daily-verse-translit'),
     dailyVerseMeaning: document.getElementById('daily-verse-meaning'),
+    // Add this inside the const el object, near the other daily tab elements
+    dailyVerseFullMeaning: document.getElementById('daily-full-translation'),
 };
 
 
@@ -157,6 +159,9 @@ function renderVerse(verse) {
     if (el.verseTranslit) el.verseTranslit.textContent = verse.transliteration;
     if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings;
     if (el.verseSelect) el.verseSelect.value = verse.verse_number;
+    // Inside renderVerse(verse)
+    if (el.verseMeaning) el.verseMeaning.textContent = verse.word_meanings;
+    // Add a line here to show the full translation in the browse view too! 
 }
 
 function populateChapterDropdown(chapters) {
@@ -321,8 +326,9 @@ async function loadDailyVerse(offset = 0) {
             `${chapterData.name_translated} · ${chapterData.name_transliterated}`;
         if (el.dailyVerseText) el.dailyVerseText.textContent = verseData.text;
         if (el.dailyVerseTranslit) el.dailyVerseTranslit.textContent = verseData.transliteration;
+        // NEW LINE BELOW:
+        if (el.dailyVerseFullMeaning) el.dailyVerseFullMeaning.textContent = verseData.translations[0]?.description || "Translation currently unavailable.";
         if (el.dailyVerseMeaning) el.dailyVerseMeaning.textContent = verseData.word_meanings;
-
         if (el.dailyCard) el.dailyCard.style.display = 'flex';
 
     } catch (err) {
