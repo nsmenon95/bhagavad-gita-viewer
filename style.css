@@ -509,6 +509,21 @@ h1 {
   justify-content: center;
 }
 
+/* Styling for the new Full Translation section */
+.daily-translation-text {
+  font-size: 1.1rem;      /* Larger than word meanings */
+  line-height: 1.8;
+  font-weight: 600;      /* Semibold to make it stand out */
+  color: #fff;           /* Bright white */
+  margin-top: -0.4rem;    /* Pull closer to its label */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle depth */
+}
+
+/* Optional: Make the labels slightly more visible */
+.daily-meaning-label {
+  margin-top: 0.5rem;
+}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
