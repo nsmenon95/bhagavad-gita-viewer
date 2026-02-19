@@ -1,26 +1,28 @@
 /* ============================================================
    CSS RESET & TOKENS
    ============================================================ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-  --saffron:     #e8641a;
-  --saffron-deep:#c04f10;
-  --gold:        #f5c842;
-  --cream:       #fffdf5;
-  --text-dark:   #2c1a0e;
-  --text-mid:    #5a3e2b;
-  --text-light:  #9b7b5a;
-  --success:     #2e7d32;
-  --error:       #c62828;
-  --card-bg:     rgba(255, 253, 245, 0.97);
-  --radius:      14px;
-  --shadow:      0 8px 32px rgba(44,26,14,0.13);
-  --transition:  0.22s ease;
+  --saffron: #e8641a;
+  --saffron-deep: #c04f10;
+  --saffron-pale: #fff3e8;
+  --gold: #f5c842;
+  --gold-deep: #d4a017;
+  --cream: #fffdf5;
+  --text-dark: #2c1a0e;
+  --text-mid: #5a3e2b;
+  --text-light: #9b7b5a;
+  --error: #c62828;
+  --card-bg: rgba(255, 253, 245, 0.98);
+  --radius: 14px;
+  --transition: 0.22s ease;
 }
 
 body {
@@ -30,7 +32,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 2rem 1rem 4rem;
+  padding: 2rem 1rem 5rem;
   color: var(--text-dark);
 }
 
@@ -39,32 +41,123 @@ body {
    ============================================================ */
 .container {
   background: var(--card-bg);
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: var(--shadow), 0 2px 0 var(--gold) inset;
-  max-width: 800px;
+  padding: 2rem 2rem 2.5rem;
+  border-radius: 22px;
+  box-shadow: 0 12px 48px rgba(44, 26, 14, 0.18);
+  max-width: 820px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  position: relative;
+  gap: 1.5rem;
   border-top: 5px solid var(--saffron);
 }
 
 /* ============================================================
-   HEADING
+   HEADER
    ============================================================ */
+.app-header {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.om-symbol {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+}
+
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 2.4rem;
   color: var(--saffron-deep);
-  text-align: center;
   letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: 1.15;
+}
+
+.app-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
 }
 
 /* ============================================================
-   NAV BAR  (chapter & verse navigation)
+   TAB BAR
+   ============================================================ */
+.tab-bar {
+  display: flex;
+  gap: 0.5rem;
+  background: #f5ece0;
+  border-radius: 40px;
+  padding: 0.3rem;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  color: var(--text-mid);
+  background: transparent;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
+  letter-spacing: 0.01em;
+}
+
+.tab-btn:hover:not(.active) {
+  background: rgba(232, 100, 26, 0.08);
+  color: var(--saffron-deep);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-deep));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(232, 100, 26, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   TAB PANEL
+   ============================================================ */
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeIn 0.28s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   NAV BAR (Browse tab)
    ============================================================ */
 .nav-bar {
   display: flex;
@@ -82,26 +175,59 @@ h1 {
   border-radius: 25px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-weight: 600;
   transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
 }
 
-.btn:active { transform: scale(0.97); }
+.btn:active {
+  transform: scale(0.97) !important;
+}
 
 .btn-nav {
   background: linear-gradient(135deg, var(--saffron), var(--saffron-deep));
   color: #fff;
   padding: 0.55rem 1.2rem;
-  box-shadow: 0 3px 10px rgba(232, 100, 26, 0.3);
+  box-shadow: 0 3px 10px rgba(232, 100, 26, 0.28);
 }
+
 .btn-nav:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(232, 100, 26, 0.4);
+  box-shadow: 0 6px 18px rgba(232, 100, 26, 0.38);
 }
+
 .btn-nav:disabled {
-  opacity: 0.4;
+  opacity: 0.38;
   cursor: not-allowed;
+}
+
+.btn-refresh {
+  background: linear-gradient(135deg, #7c5cbf, #5b3fa0);
+  color: #fff;
+  padding: 0.7rem 1.8rem;
+  font-size: 0.97rem;
+  box-shadow: 0 4px 16px rgba(91, 63, 160, 0.3);
+}
+
+.btn-refresh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 22px rgba(91, 63, 160, 0.4);
+}
+
+.btn-share {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.btn-share:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  transform: translateY(-1px);
 }
 
 /* ============================================================
@@ -123,6 +249,7 @@ h1 {
   min-width: 160px;
   max-width: 300px;
 }
+
 .dropdown:focus {
   outline: none;
   border-color: var(--saffron);
@@ -130,13 +257,37 @@ h1 {
 }
 
 /* ============================================================
-   CHAPTER INFO CARD
+   BADGES
+   ============================================================ */
+.badge {
+  background: var(--saffron);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.22rem 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-light {
+  background: var(--gold);
+  color: var(--text-dark);
+}
+
+.badge-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: var(--text-dark);
+}
+
+/* ============================================================
+   CHAPTER INFO CARD (Browse tab)
    ============================================================ */
 .chapter-card {
   background: linear-gradient(135deg, #fff8ee, #fffdf5);
   border: 1px solid #f0dbb8;
   border-radius: var(--radius);
-  padding: 1.6rem 1.8rem;
+  padding: 1.5rem 1.8rem;
   text-align: center;
 }
 
@@ -144,41 +295,26 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 0.6rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
   flex-wrap: wrap;
-}
-
-.badge {
-  background: var(--saffron);
-  color: #fff;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.25rem 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.badge-light {
-  background: var(--gold);
-  color: var(--text-dark);
 }
 
 .chapter-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.7rem;
+  font-size: 1.65rem;
   color: var(--saffron-deep);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .sanskrit-name {
-  font-size: 1rem;
+  font-size: 0.97rem;
   color: var(--text-mid);
   font-style: italic;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.7rem;
 }
 
 .chapter-summary {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--text-mid);
   line-height: 1.65;
   max-width: 640px;
@@ -186,7 +322,7 @@ h1 {
 }
 
 /* ============================================================
-   VERSE DISPLAY CARD
+   VERSE DISPLAY (Browse tab)
    ============================================================ */
 .verse-container {
   background: #fff;
@@ -200,13 +336,8 @@ h1 {
   animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 .verse-number {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--saffron);
   letter-spacing: 0.08em;
@@ -216,7 +347,7 @@ h1 {
 }
 
 .verse-text {
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.8;
   color: var(--text-dark);
   font-weight: 500;
@@ -224,7 +355,7 @@ h1 {
 }
 
 .verse-translit {
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   color: var(--text-mid);
   font-style: italic;
   line-height: 1.7;
@@ -233,7 +364,7 @@ h1 {
 }
 
 .verse-meaning {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-light);
   line-height: 1.7;
 }
@@ -252,8 +383,9 @@ h1 {
 }
 
 @keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ============================================================
@@ -264,19 +396,157 @@ h1 {
   border: 1px solid #ffb3b3;
   border-radius: var(--radius);
   color: var(--error);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 500;
   padding: 0.9rem 1.2rem;
   text-align: center;
 }
 
 /* ============================================================
+   VERSE OF THE DAY — HEADER
+   ============================================================ */
+.daily-header {
+  text-align: center;
+}
+
+.daily-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--saffron);
+}
+
+.daily-date {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-top: 0.2rem;
+}
+
+/* ============================================================
+   VERSE OF THE DAY — MAIN CARD
+   ============================================================ */
+.daily-card {
+  position: relative;
+  background: linear-gradient(145deg, #c04f10, #e8641a, #f5a623);
+  border-radius: 18px;
+  padding: 2.5rem 2.2rem 2rem;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(192, 79, 16, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Decorative glow blob */
+.daily-card-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.daily-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.daily-chapter-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.daily-sanskrit {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  font-weight: 500;
+  white-space: pre-line;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.daily-translit {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+}
+
+.daily-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+}
+
+.daily-meaning-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.daily-meaning {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ============================================================
+   VERSE OF THE DAY — ACTIONS
+   ============================================================ */
+.daily-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 600px) {
-  h1 { font-size: 1.75rem; }
-  .chapter-title { font-size: 1.3rem; }
-  .container { padding: 1.5rem 1rem; }
-  .verse-container { padding: 1.2rem 1rem; }
-  .dropdown { min-width: 130px; }
+  body {
+    padding: 1rem 0.75rem 4rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .chapter-title {
+    font-size: 1.3rem;
+  }
+
+  .daily-chapter-name {
+    font-size: 1.2rem;
+  }
+
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .verse-container {
+    padding: 1.2rem 1rem;
+  }
+
+  .daily-card {
+    padding: 1.8rem 1.3rem 1.5rem;
+  }
+
+  .dropdown {
+    min-width: 130px;
+  }
+
+  .tab-btn {
+    font-size: 0.85rem;
+    padding: 0.55rem 0.5rem;
+  }
 }

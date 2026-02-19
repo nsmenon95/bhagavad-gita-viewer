@@ -5,76 +5,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Divine Bhagavad Gita</title>
-    <meta name="description" content="Read and explore the Bhagavad Gita — verse by verse, chapter by chapter.">
+    <meta name="description"
+        content="Read and explore the Bhagavad Gita — verse by verse, chapter by chapter, or get today's divine verse.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='90'>🕉️</text></svg>">
 
-    <!-- Google Font -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
 
-    <!-- CSS File -->
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>🕉 Bhagavad Gita</h1>
 
-        <!-- ── Chapter Navigation Bar ──────────────────────────── -->
-        <div class="nav-bar">
-            <button class="btn btn-nav" id="prev-chapter-btn" title="Previous Chapter">&#8592; Chapter</button>
+        <!-- ── Header ─────────────────────────────────────────── -->
+        <header class="app-header">
+            <div class="om-symbol">🕉</div>
+            <h1>Bhagavad Gita</h1>
+            <p class="app-subtitle">Eternal wisdom, verse by verse</p>
+        </header>
 
-            <select class="dropdown" id="chapter-select" title="Select Chapter">
-                <option>Loading…</option>
-            </select>
-
-            <button class="btn btn-nav" id="next-chapter-btn" title="Next Chapter">Chapter &#8594;</button>
+        <!-- ── Tab Switcher ───────────────────────────────────── -->
+        <div class="tab-bar" role="tablist">
+            <button class="tab-btn active" id="tab-browse" role="tab" aria-selected="true" aria-controls="panel-browse"
+                onclick="switchTab('browse')">
+                📖 Browse
+            </button>
+            <button class="tab-btn" id="tab-daily" role="tab" aria-selected="false" aria-controls="panel-daily"
+                onclick="switchTab('daily')">
+                ✨ Verse of the Day
+            </button>
         </div>
 
-        <!-- ── Chapter Info Card ──────────────────────────────── -->
-        <div class="chapter-card">
-            <div class="chapter-details">
-                <span id="chapter-number" class="badge"></span>
-                <span id="verse-count" class="badge badge-light"></span>
+        <!-- ══════════════════════════════════════════════════════
+             PANEL 1 — BROWSE
+        ══════════════════════════════════════════════════════ -->
+        <div id="panel-browse" class="tab-panel" role="tabpanel">
+
+            <!-- Chapter Nav -->
+            <div class="nav-bar">
+                <button class="btn btn-nav" id="prev-chapter-btn" title="Previous Chapter">&#8592; Chapter</button>
+                <select class="dropdown" id="chapter-select" title="Select Chapter">
+                    <option>Loading…</option>
+                </select>
+                <button class="btn btn-nav" id="next-chapter-btn" title="Next Chapter">Chapter &#8594;</button>
             </div>
-            <h2 class="chapter-title" id="chapter-name">Loading…</h2>
-            <p class="sanskrit-name" id="sanskrit-name"></p>
-            <p class="chapter-summary" id="chapter-summary">Loading chapter information…</p>
-        </div>
 
-        <!-- ── Loader ─────────────────────────────────────────── -->
-        <div id="loader" class="loader" style="display: none;"></div>
+            <!-- Chapter Info Card -->
+            <div class="chapter-card">
+                <div class="chapter-details">
+                    <span id="chapter-number" class="badge"></span>
+                    <span id="verse-count" class="badge badge-light"></span>
+                </div>
+                <h2 class="chapter-title" id="chapter-name">Loading…</h2>
+                <p class="sanskrit-name" id="sanskrit-name"></p>
+                <p class="chapter-summary" id="chapter-summary">Loading chapter information…</p>
+            </div>
 
-        <!-- ── Error Message ──────────────────────────────────── -->
-        <div id="error-message" class="error-message" style="display: none;"></div>
+            <!-- Loader -->
+            <div id="loader" class="loader" style="display:none;"></div>
 
-        <!-- ── Verse Navigation Bar ───────────────────────────── -->
-        <div class="nav-bar">
-            <button class="btn btn-nav" id="prev-verse-btn" title="Previous Verse">&#8592; Verse</button>
+            <!-- Error -->
+            <div id="error-message" class="error-message" style="display:none;"></div>
 
-            <select class="dropdown" id="verse-select" title="Select Verse">
-                <option>—</option>
-            </select>
+            <!-- Verse Nav -->
+            <div class="nav-bar">
+                <button class="btn btn-nav" id="prev-verse-btn" title="Previous Verse">&#8592; Verse</button>
+                <select class="dropdown" id="verse-select" title="Select Verse">
+                    <option>—</option>
+                </select>
+                <button class="btn btn-nav" id="next-verse-btn" title="Next Verse">Verse &#8594;</button>
+            </div>
 
-            <button class="btn btn-nav" id="next-verse-btn" title="Next Verse">Verse &#8594;</button>
-        </div>
+            <!-- Verse Display -->
+            <div id="verse-container" class="verse-container" style="display:none;">
+                <p id="verse-number" class="verse-number"></p>
+                <p id="verse-text" class="verse-text"></p>
+                <p id="verse-translit" class="verse-translit"></p>
+                <p id="verse-meaning" class="verse-meaning"></p>
+            </div>
 
-        <!-- ── Verse Display ──────────────────────────────────── -->
-        <div id="verse-container" class="verse-container" style="display: none;">
-            <p id="verse-number" class="verse-number"></p>
-            <p id="verse-text" class="verse-text"></p>
-            <p id="verse-translit" class="verse-translit"></p>
-            <p id="verse-meaning" class="verse-meaning"></p>
-        </div>
-    </div>
+        </div><!-- /panel-browse -->
 
-    <!-- JavaScript -->
+        <!-- ══════════════════════════════════════════════════════
+             PANEL 2 — VERSE OF THE DAY
+        ══════════════════════════════════════════════════════ -->
+        <div id="panel-daily" class="tab-panel" style="display:none;" role="tabpanel">
+
+            <div class="daily-header">
+                <p class="daily-label">Today's Divine Wisdom</p>
+                <p class="daily-date" id="daily-date"></p>
+            </div>
+
+            <!-- Loader for daily panel -->
+            <div id="daily-loader" class="loader" style="display:none;"></div>
+
+            <!-- Error for daily panel -->
+            <div id="daily-error" class="error-message" style="display:none;"></div>
+
+            <!-- Daily Verse Card -->
+            <div id="daily-card" class="daily-card" style="display:none;">
+                <div class="daily-card-glow"></div>
+
+                <div class="daily-meta">
+                    <span id="daily-chapter-badge" class="badge"></span>
+                    <span id="daily-verse-badge" class="badge badge-gold"></span>
+                </div>
+
+                <h2 class="daily-chapter-name" id="daily-chapter-name"></h2>
+                <p class="daily-sanskrit" id="daily-verse-text"></p>
+                <p class="daily-translit" id="daily-verse-translit"></p>
+
+                <div class="daily-divider"></div>
+
+                <p class="daily-meaning-label">Word Meanings</p>
+                <p class="daily-meaning" id="daily-verse-meaning"></p>
+
+                <button class="btn btn-share" id="share-btn" onclick="shareVerse()">
+                    🔗 Share this verse
+                </button>
+            </div>
+
+            <!-- Next Verse button (for serendipity) -->
+            <div class="daily-actions">
+                <button class="btn btn-refresh" id="refresh-btn" onclick="loadNewRandomVerse()">
+                    🎲 Give me another verse
+                </button>
+            </div>
+
+        </div><!-- /panel-daily -->
+
+    </div><!-- /container -->
+
     <script src="script.js"></script>
 </body>
 
