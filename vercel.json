@@ -1,0 +1,39 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "api/**/*.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "*.{html,css,js}",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/chapters",
+            "dest": "/api/chapters.js"
+        },
+        {
+            "src": "/api/chapter/([^/]+)/verses",
+            "dest": "/api/chapter/[id]/verses.js?id=$1"
+        },
+        {
+            "src": "/api/chapter/([^/]+)/verse/([^/]+)",
+            "dest": "/api/chapter/[id]/verse/[verseId].js?id=$1&verseId=$2"
+        },
+        {
+            "src": "/api/chapter/([^/]+)",
+            "dest": "/api/chapter/[id].js?id=$1"
+        },
+        {
+            "src": "/api/health",
+            "dest": "/api/health.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/$1"
+        }
+    ]
+}

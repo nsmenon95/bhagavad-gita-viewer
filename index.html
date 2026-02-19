@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Divine Bhagavad Gita</title>
-    
+    <meta name="description" content="Read and explore the Bhagavad Gita — verse by verse, chapter by chapter.">
+
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='90'>🕉️</text></svg>">
-    
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='90'>🕉️</text></svg>">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- CSS File -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
-        <h1>Bhagavad Gita</h1>
+        <h1>🕉 Bhagavad Gita</h1>
 
-        <div class="verse-container">
-            <h2 class="chapter-title" id="chapter-name">Loading...</h2>
+        <!-- ── Chapter Navigation Bar ──────────────────────────── -->
+        <div class="nav-bar">
+            <button class="btn btn-nav" id="prev-chapter-btn" title="Previous Chapter">&#8592; Chapter</button>
 
-            <div class="chapter-details">
-                <span id="chapter-number"></span>
-                <span class="verse-count" id="verse-count"></span>
-            </div>
+            <select class="dropdown" id="chapter-select" title="Select Chapter">
+                <option>Loading…</option>
+            </select>
 
-            <p class="sanskrit-name" id="sanskrit-name"></p>
-            <p class="chapter-summary" id="chapter-summary">Loading chapter information...</p>
+            <button class="btn btn-nav" id="next-chapter-btn" title="Next Chapter">Chapter &#8594;</button>
         </div>
 
-        <!-- Loader (Initially Hidden) -->
+        <!-- ── Chapter Info Card ──────────────────────────────── -->
+        <div class="chapter-card">
+            <div class="chapter-details">
+                <span id="chapter-number" class="badge"></span>
+                <span id="verse-count" class="badge badge-light"></span>
+            </div>
+            <h2 class="chapter-title" id="chapter-name">Loading…</h2>
+            <p class="sanskrit-name" id="sanskrit-name"></p>
+            <p class="chapter-summary" id="chapter-summary">Loading chapter information…</p>
+        </div>
+
+        <!-- ── Loader ─────────────────────────────────────────── -->
         <div id="loader" class="loader" style="display: none;"></div>
 
-        <!-- Next Chapter Button -->
-        <button class="btn" id="next-btn" onclick="getChapter()">Next Chapter</button>
-
-        <!-- Error Message (Initially Hidden) -->
+        <!-- ── Error Message ──────────────────────────────────── -->
         <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <!-- ── Verse Navigation Bar ───────────────────────────── -->
+        <div class="nav-bar">
+            <button class="btn btn-nav" id="prev-verse-btn" title="Previous Verse">&#8592; Verse</button>
+
+            <select class="dropdown" id="verse-select" title="Select Verse">
+                <option>—</option>
+            </select>
+
+            <button class="btn btn-nav" id="next-verse-btn" title="Next Verse">Verse &#8594;</button>
+        </div>
+
+        <!-- ── Verse Display ──────────────────────────────────── -->
+        <div id="verse-container" class="verse-container" style="display: none;">
+            <p id="verse-number" class="verse-number"></p>
+            <p id="verse-text" class="verse-text"></p>
+            <p id="verse-translit" class="verse-translit"></p>
+            <p id="verse-meaning" class="verse-meaning"></p>
+        </div>
     </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
+
 </html>

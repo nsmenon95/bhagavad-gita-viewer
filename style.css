@@ -1,137 +1,282 @@
-* {
+/* ============================================================
+   CSS RESET & TOKENS
+   ============================================================ */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --saffron:     #e8641a;
+  --saffron-deep:#c04f10;
+  --gold:        #f5c842;
+  --cream:       #fffdf5;
+  --text-dark:   #2c1a0e;
+  --text-mid:    #5a3e2b;
+  --text-light:  #9b7b5a;
+  --success:     #2e7d32;
+  --error:       #c62828;
+  --card-bg:     rgba(255, 253, 245, 0.97);
+  --radius:      14px;
+  --shadow:      0 8px 32px rgba(44,26,14,0.13);
+  --transition:  0.22s ease;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #ff9966, #ff5e62);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: linear-gradient(145deg, #b5451b 0%, #e8941a 55%, #f5c842 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: #333;
-  padding: 20px;
+  align-items: flex-start;
+  padding: 2rem 1rem 4rem;
+  color: var(--text-dark);
 }
 
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
 .container {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow), 0 2px 0 var(--gold) inset;
   max-width: 800px;
-  width: 90%;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #ff9966, #ff5e62);
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  position: relative;
-  display: inline-block;
-}
-
-h1::after {
-  content: '🕉️';
-  position: absolute;
-  top: -10px;
-  right: -40px;
-  font-size: 1.5rem;
-}
-
-.verse-container {
-  margin: 2rem 0;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #fff;
-  min-height: 200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 1.4rem;
   position: relative;
+  border-top: 5px solid var(--saffron);
 }
 
-.verse {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  color: #444;
+/* ============================================================
+   HEADING
+   ============================================================ */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  color: var(--saffron-deep);
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
-.translation {
-  font-size: 1.1rem;
-  color: #666;
-  font-style: italic;
+/* ============================================================
+   NAV BAR  (chapter & verse navigation)
+   ============================================================ */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .btn {
-  background: linear-gradient(45deg, #ff9966, #ff5e62);
-  color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
   border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 94, 98, 0.2);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
 }
 
-.btn:hover {
+.btn:active { transform: scale(0.97); }
+
+.btn-nav {
+  background: linear-gradient(135deg, var(--saffron), var(--saffron-deep));
+  color: #fff;
+  padding: 0.55rem 1.2rem;
+  box-shadow: 0 3px 10px rgba(232, 100, 26, 0.3);
+}
+.btn-nav:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 94, 98, 0.3);
+  box-shadow: 0 6px 18px rgba(232, 100, 26, 0.4);
+}
+.btn-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
+/* ============================================================
+   DROPDOWNS
+   ============================================================ */
+.dropdown {
+  appearance: none;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23e8641a' d='M6 8L0 0h12z'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: 2px solid #e8d5b0;
+  border-radius: 25px;
+  color: var(--text-dark);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 2.2rem 0.5rem 1.1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  flex: 1;
+  min-width: 160px;
+  max-width: 300px;
+}
+.dropdown:focus {
+  outline: none;
+  border-color: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(232, 100, 26, 0.15);
+}
+
+/* ============================================================
+   CHAPTER INFO CARD
+   ============================================================ */
+.chapter-card {
+  background: linear-gradient(135deg, #fff8ee, #fffdf5);
+  border: 1px solid #f0dbb8;
+  border-radius: var(--radius);
+  padding: 1.6rem 1.8rem;
+  text-align: center;
+}
+
+.chapter-details {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: var(--saffron);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-light {
+  background: var(--gold);
+  color: var(--text-dark);
+}
+
+.chapter-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  color: var(--saffron-deep);
+  margin-bottom: 0.4rem;
+}
+
+.sanskrit-name {
+  font-size: 1rem;
+  color: var(--text-mid);
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+.chapter-summary {
+  font-size: 0.92rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   VERSE DISPLAY CARD
+   ============================================================ */
+.verse-container {
+  background: #fff;
+  border: 1px solid #ead8b0;
+  border-radius: var(--radius);
+  padding: 1.8rem 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.verse-number {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--saffron);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-left: 3px solid var(--saffron);
+  padding-left: 0.6rem;
+}
+
+.verse-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  font-weight: 500;
+  white-space: pre-line;
+}
+
+.verse-translit {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  font-style: italic;
+  line-height: 1.7;
+  border-top: 1px dashed #e8d5b0;
+  padding-top: 0.8rem;
+}
+
+.verse-meaning {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
 .loader {
-  display: none;
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #ff5e62;
+  width: 44px;
+  height: 44px;
+  border: 5px solid #f0dbb8;
+  border-top: 5px solid var(--saffron);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
+  animation: spin 0.85s linear infinite;
+  margin: 0.5rem auto;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
+  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.chapter-verse {
-  font-size: 0.9rem;
-  color: #888;
-  margin-top: 1rem;
+/* ============================================================
+   ERROR MESSAGE
+   ============================================================ */
+.error-message {
+  background: #fff3f3;
+  border: 1px solid #ffb3b3;
+  border-radius: var(--radius);
+  color: var(--error);
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.9rem 1.2rem;
+  text-align: center;
 }
 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 600px) {
-  .container {
-      padding: 1rem;
-  }
-
-  h1 {
-      font-size: 1.8rem;
-  }
-
-  .verse {
-      font-size: 1rem;
-  }
-
-  .translation {
-      font-size: 0.9rem;
-  }
+  h1 { font-size: 1.75rem; }
+  .chapter-title { font-size: 1.3rem; }
+  .container { padding: 1.5rem 1rem; }
+  .verse-container { padding: 1.2rem 1rem; }
+  .dropdown { min-width: 130px; }
 }
