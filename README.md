@@ -68,7 +68,7 @@ Explore the eternal wisdom of the **Bhagavad Gita** with this beautifully crafte
 
 | Desktop View | Mobile View |
 | :--- | :--- |
-| ![Desktop Mockup](https://via.placeholder.com/600x400/e8641a/ffffff?text=Divine+Gita+Desktop) | ![Mobile Mockup](https://via.placeholder.com/200x400/f5c842/2c1a0e?text=Divine+Gita+Mobile) |
+| ![Desktop Mockup](./assets/Bhagavad-gita-desktop.png) | ![Mobile Mockup](./assets/Bhagavad-git-mobile.jpg) |
 
 *(Note: Replace placeholders with actual screenshots after deployment)*
 
